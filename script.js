@@ -1,7 +1,7 @@
 jQuery(function($) {
 	
 	// gps に対応しているかチェック
-	if (!navigator.geolocation) {
+	if (! navigator.geolocation) {
 		$('#gmap').text('GPSに対応したブラウザでお試しください');
 		return false;
 	}
@@ -11,16 +11,15 @@ jQuery(function($) {
 
 	// gps取得開始
 	navigator.geolocation.getCurrentPosition(function(pos) {
+		// google map 初期化
 		var gmap = new google.maps.Map($('#gmap').get(0), {
 			center: new google.maps.LatLng(35, 135),
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 			zoom: 17
 		});
 
-		// gps 取得成功
-		var currentPos = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-		
 		// 現在位置にピンをたてる
+		var currentPos = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
 		var currentMarker = new google.maps.Marker({
 			position: currentPos
 		});
@@ -38,7 +37,7 @@ jQuery(function($) {
 			fillOpacity: 0.2
 		});
 
-		// 現在地にスクロールさせる
+		// マップを現在位置にスクロールさせる
 		gmap.panTo(currentPos);
 	
 	}, function() {
